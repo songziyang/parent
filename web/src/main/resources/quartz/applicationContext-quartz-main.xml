@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	        	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <bean name="startQuertz2"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="configLocation" value="classpath:quartz.properties"/>
+        <property name="triggers">
+            <list>
+                <!--====================定时任务开启开始====================-->
+                <!-- 总结算  活期宝 定存宝 基金类产品 VIP等级 红包 体验金 -->
+                <!--<ref bean="accountSettlementJob0Trigger"/>-->
+                <!--<ref bean="accountSettlementJob1Trigger"/>-->
+                <!--<ref bean="accountSettlementJob2Trigger"/>-->
+                <!--<ref bean="accountSettlementJob3Trigger"/>-->
+                <!--<ref bean="accountSettlementJob4Trigger"/>-->
+                <!--<ref bean="accountSettlementJob5Trigger"/>-->
+                <!--<ref bean="accountSettlementJob6Trigger"/>-->
+                <!--<ref bean="accountSettlementJob7Trigger"/>-->
+                <!--<ref bean="accountSettlementJob8Trigger"/>-->
+                <!--<ref bean="accountSettlementJob9Trigger"/>-->
+                <!--<ref bean="accountSettlementJob10Trigger"/>-->
+                <!--<ref bean="accountSettlementJob11Trigger"/>-->
+                <!--<ref bean="accountSettlementJob12Trigger"/>-->
+                <!--<ref bean="accountSettlementJob13Trigger"/>-->
+                <!--<ref bean="accountSettlementJob14Trigger"/>-->
+                <!--<ref bean="accountSettlementJob15Trigger"/>-->
+                <!--<ref bean="accountSettlementJob16Trigger"/>-->
+                <!--<ref bean="accountSettlementJob17Trigger"/>-->
+                <!--<ref bean="accountSettlementJob18Trigger"/>-->
+                <!--<ref bean="accountSettlementJob19Trigger"/>-->
+                <!-- 产品结算预处理成功定时任务 -->
+                <!--<ref bean="accountPretreatmentSuccessTrigger" />-->
+            </list>
+        </property>
+    </bean>
+
+
+    <!--<bean id="accountSettlementJob0Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob0"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob1Trigger"  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob1"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob2Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob2"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob3"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob4Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob4"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob5Trigger"  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob5"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob6Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob6"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob7Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob7"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob8Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob8"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob9Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob9"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob10Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob10"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob11Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob11"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob12Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob12"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob13Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob13"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob14Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob14"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob15Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob15"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob16Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob16"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob17Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob17"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob18Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob18"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob19Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountSettlementJob19"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 10 0 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--&lt;!&ndash; 定存赎回定时任务 &ndash;&gt;-->
+    <!--<bean id="accountRagularRedeemTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountRagularRedeemJob"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 0/15 * * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--&lt;!&ndash; 产品结算预处理成功定时任务 &ndash;&gt;-->
+    <!--<bean id="accountPretreatmentSuccessTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="accountPretreatmentSuccessJob"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 0/15 * * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+
+
+    <!--<bean id="accountSettlementJob0" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob0</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob1" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob1</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob2" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob2</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob3" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob3</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob4" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob4</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob5" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob5</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob6" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob6</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob7" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob7</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob8" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob8</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob9" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob9</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob10" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob10</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob11" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob11</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob12" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob12</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob13" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob13</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob14" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob14</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob15" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob15</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob16" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob16</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob17" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob17</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob18" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob18</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="accountSettlementJob19" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountSettlementQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>accountSettlementJob19</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--&lt;!&ndash;产品结算预处理成功定时任务 &ndash;&gt;-->
+    <!--<bean id="accountPretreatmentSuccessJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="accountPretreatmentSuccessQuartz"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>handlePretreatmentSuccess</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--<bean id="accountSettlementQuartz" class="com.ydzb.account.quartz.AccountSettlementQuartz"/>-->
+    <!--&lt;!&ndash;产品结算预处理成功定时任务 &ndash;&gt;-->
+    <!--<bean id="accountPretreatmentSuccessQuartz" class="com.ydzb.account.quartz.AccountPretreatementSuccessQuartz"/>-->
+</beans>

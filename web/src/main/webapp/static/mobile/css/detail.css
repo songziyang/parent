@@ -1,0 +1,23 @@
+html,body{margin:0;height:100%;}
+*{margin: 0;padding: 0}
+ul{list-style-type:none}
+body{background: #F3F3F3;}
+.container-fluid{padding-left: 0px;padding-right: 0px;}
+#page.container-fluid{display:block;}
+.middle-span{display: inline-block;height: 100%;vertical-align:middle;}
+
+.left{width:40%;height: 100%;float: left;text-align: left;position: relative;left:5%}
+.right{width:55%;height: 100%;float: left;text-align: end;}
+
+
+.name{width:70%;height:30px; position: relative;left:15%;top:40%;margin-top: -15px;border-radius: 20px;color: #ffffff;background: #00ab9b;text-align: center}
+.row-fluid{width: 100%;}
+.row-fluid .col-xs-10{padding-left:0px;padding-right:0px;width: 90%}
+.row-fluid .col-xs-1{padding-left:0px;padding-right:0px;width: 5%}
+table td{border:#f3f3f3 2px solid;background: #ffffff}
+#success{height: 30px;width:90% }
+#fail{height: 30px;width:90% }
+#back{height: 30px;width:100%;margin-top:15px;margin-bottom:15px;display: inline-block;color:#FFFFFF;font-size: 1.5em}
+.col-xs-6{background: #00ab9b;}
+#index{height: 30px;width:100%;margin-top:15px;;margin-bottom:15px;display: inline-block;color:#FFFFFF;font-size: 1.5em}
+.col-xs-10{margin-top: 30px}

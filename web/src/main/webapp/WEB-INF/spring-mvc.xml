@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+
+	<!-- 启用spring mvc控制器的注解 -->
+	<mvc:annotation-driven >
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+					<property name="supportedMediaTypes">
+						<list>
+						    <value>text/plain;charset=UTF-8</value>
+							<value>text/html;charset=UTF-8</value>
+							<value>application/json;charset=UTF-8</value>
+						</list>
+					</property>
+				</bean>
+				<bean
+					class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+					<property name="supportedMediaTypes">
+						<list>
+						    <value>text/plain;charset=UTF-8</value>
+							<value>text/html;charset=UTF-8</value>
+							<value>application/json;charset=UTF-8</value>
+						</list>
+					</property>
+				</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	
+
+	<!-- 自动扫描且只扫描@Controller -->
+	<context:component-scan base-package="com.ydzb.web.*.controller"
+		use-default-filters="false">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation"
+			expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
+	
+
+ 
+	<!-- 定义JSP文件的位置 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	
+	 <mvc:view-controller  path="/"  view-name="redirect:/main " />
+	 
+	<!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL	-->
+	<mvc:default-servlet-handler/>
+
+	
+	<!-- 将日志切面交给Spring容器管理 -->
+	<bean id="logAspectJ" class="com.ydzb.core.aop.LogAspectJ" />
+	<!-- 使用XML方式进行AOP配置 -->
+	<aop:config>
+		<!-- 使用XML方式配置日志切面 -->
+		<aop:aspect id="logaop" ref="logAspectJ">
+			<!-- 定义切入点 拦截所有service方法 -->
+			<aop:pointcut id="logpointcut"
+				expression="execution(* com.ydzb.web.*.controller.*.*(..))" />
+			<!-- 将LogAspectJ切面中的myBeforeAdvice方法定义成前置通知 -->
+			<aop:before pointcut-ref="logpointcut" method="myBeforeAdvice" />
+			<!-- 将LogAspectJ切面中的myAfterReturningAdvice方法定义成后置通知 -->
+			<aop:after-returning pointcut-ref="logpointcut"
+				method="myAfterReturningAdvice" />
+			<!-- 将LogAspectJ切面中的myAfterThrowingAdvice方法定义成异常通知 -->
+			<aop:after-throwing pointcut-ref="logpointcut"
+				method="myAfterThrowingAdvice" throwing="e" />
+			<!-- 将LogAspectJ切面中的myAfterAdvice方法定义成最终通知 -->
+			<aop:after pointcut-ref="logpointcut" method="myAfterAdvice" />
+			<!-- 将LogAspectJ切面中的myAroundAdvice方法定义成环绕通知 -->
+			<aop:around pointcut-ref="logpointcut" method="myAroundAdvice" />
+		</aop:aspect>
+	</aop:config>
+	
+	<!-- 异常处理方式 -->
+	<bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<!-- 定义默认的异常处理页面，当该异常类型的注册时使用 -->
+		<property name="defaultErrorView" value="error/500"></property>
+		<!-- 定义异常处理页面用来获取异常信息的变量名，默认名为exception -->
+		<property name="exceptionAttribute" value="e"></property>
+		<!-- 定义需要特殊处理的异常，用类名或完全路径名作为key，异常页名作为值-->
+			<property name="exceptionMappings">
+				<props>
+					<prop key="org.apache.shiro.authz.AuthorizationException">redirect:/admin/purview/withoutPurview</prop>
+				</props>
+			</property>
+	</bean>
+
+
+
+	<!-- 文件上传 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	    <!-- 40M 文件 -->
+		<property name="maxUploadSize" value="41943040" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+	
+	
+</beans>
+		

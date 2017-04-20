@@ -1,0 +1,31 @@
+html,body{margin:0;height:100%}
+*{margin: 0;padding: 0}
+.button {
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-size: 0.5em;
+    border-radius: .5em;
+    box-shadow:0px 4px  rgba(0, 134 ,139,2.0);
+    border-color:#2F4F4F;
+    background:#00AB9B;
+    color: #FFFFFF;
+    height:40%;
+    width:100%;
+    float: left;
+}
+.button-position{height:80%;position:relative;top:10%;text-align: center}
+.button-image{position:relative;top:-7%;}
+div[name='test']{height:100%;width:100%;background:#FFFFFF;}
+.title{height:15%;width:100%;text-align:center;vertical-align:middle;}
+.middle-span{display: inline-block;height: 100%;vertical-align:middle;}
+.bottom{height:10%;width:100%;text-align:center;vertical-align:middle;}
+.bottom-image{width: 22px;height: 19px;vertical-align:middle;}
+.text{height:5%;width:100%;text-align:center; font-size: 1.0em;color:#8E8E8E}
+.pic{height:40%;width:100%;text-align:center;}
+.description{height:25%;margin-left:10%;width:80%;text-align:center; font-size: 1.1em;color:#8B7B8B}
+.type1{width: 33%;height:100%;float: left;text-align: center;}
+.type2{height:80%;position:relative;top:15%;text-align: center}
+.type-text{display: block;margin-top: 5%;font-family:Microsoft YaHei;font-size: 0.5em }
+.type-num{display: block;margin-top: 5%;font-family:IMPACT;font-size: 1.0em }

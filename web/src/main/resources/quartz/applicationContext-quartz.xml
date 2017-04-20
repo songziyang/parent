@@ -1,0 +1,850 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	        	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+    <!-- 引入其他定时器 -->
+    <import resource="applicationContext-quartz-main.xml"></import>
+    <!--启动触发器的配置开始-->
+    <bean name="startQuertz"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="configLocation" value="classpath:quartz.properties"/>
+        <property name="triggers">
+            <list>
+
+                <!--====================定时任务开启开始====================-->
+
+                <!-- 零点状态变更 -->
+                <ref bean="accountJobTrigger"/>
+
+                <!--&lt;!&ndash;上午自动发布活期宝 &ndash;&gt;-->
+                <!--<ref bean="morningAutoCurrentProductInfoTrigger"/>-->
+
+                <!--&lt;!&ndash;自动发布定存宝&ndash;&gt;-->
+                <!--<ref bean="autoRagularProductInfoJobTrigger"/>-->
+
+                <!--&lt;!&ndash;4.0推荐返现活动   &ndash;&gt;-->
+                <!--<ref bean="activityReferUserTrigger"/>-->
+
+                <!--&lt;!&ndash;定时发短信   &ndash;&gt;-->
+                <!--<ref bean="autoSendSmsTimerTrigger"/>-->
+
+                <!--&lt;!&ndash;七天内提现统计&ndash;&gt;-->
+                <!--<ref bean="accountQueryWithDrawJobTrigger"/>-->
+
+                <!--&lt;!&ndash; 生日祝福 &ndash;&gt;-->
+                <!--<ref bean="accountVipBirthdayJobTrigger"/>-->
+
+                <!--&lt;!&ndash; 生日祝福 &ndash;&gt;-->
+                <!--<ref bean="accountBirthdayJobTrigger"/>-->
+
+                <!--&lt;!&ndash;定存复投短信提示&ndash;&gt;-->
+                <!--<ref bean="accountRagularExpireInfoJobTrigger"/>-->
+
+                <!--&lt;!&ndash;平台统计&ndash;&gt;-->
+                <!--<ref bean="platformStatisticsJobTrigger"/>-->
+
+                <!--&lt;!&ndash; 平台交易统计  &ndash;&gt;-->
+                <!--<ref bean="platformTradingJobTrigger"/>-->
+
+                <!--&lt;!&ndash;平台对账统计&ndash;&gt;-->
+                <!--<ref bean="platformReconciliationJobTrigger"/>-->
+
+                <!--&lt;!&ndash;平台综合年化&ndash;&gt;-->
+                <!--<ref bean="platformAprJobTrigger"/>-->
+
+                <!--&lt;!&ndash;每日签到统计   &ndash;&gt;-->
+                <!--<ref bean="dailySignStatisticsTrigger"/>-->
+
+                <!--&lt;!&ndash;红包临期短信提醒&ndash;&gt;-->
+                <!--<ref bean="redpacketOvertimeRemindTrigger"/>-->
+
+                <!--&lt;!&ndash;结构化产品排行榜&ndash;&gt;-->
+                <!--<ref bean="depositWeekSortJobTrigger"/>-->
+
+                <!--====================定时任务开启结束====================-->
+
+
+                <!--====================后台开启开始====================-->
+
+                <!--&lt;!&ndash;平台异常统计&ndash;&gt;-->
+                <!--<ref bean="platformExceptionJobTrigger"/>-->
+
+                <!--&lt;!&ndash;代付查询&ndash;&gt;-->
+                <!--<ref bean="accountQueryPayJobTrigger"/>-->
+
+                <!--&lt;!&ndash;vip自动代付&ndash;&gt;-->
+                <!--<ref bean="accountAutoPayJobTrigger"/>-->
+
+                <!--&lt;!&ndash;平台余额提现&ndash;&gt;-->
+                <!--<ref bean="platformBalanceRemindJobTrigger"/>-->
+
+                <!--&lt;!&ndash;充值和提现提醒&ndash;&gt;-->
+                <!--<ref bean="platformTradingRemindJobTrigger"/>-->
+
+                <!--&lt;!&ndash;定存复投活动&ndash;&gt;-->
+                <!--<ref bean="activityDepositTypeJobTrigger"/>-->
+
+                <!--====================后台开启结束====================-->
+
+                <!--=====================关闭==========================-->
+
+                <!--&lt;!&ndash;工作日非vip自动代付&ndash;&gt;-->
+                <!--<ref bean="accountWeekdayJobTrigger"/>-->
+
+                <!--&lt;!&ndash;周末非vip自动代付&ndash;&gt;-->
+                <!--<ref bean="accountEverySundayJobTrigger"/>-->
+
+                <!--&lt;!&ndash; 上午天标排队  &ndash;&gt;-->
+                <!--<ref bean="morningCurrentQueueTrigger"/>-->
+
+                <!--&lt;!&ndash; 下午天标排队  &ndash;&gt;-->
+                <!--<ref bean="afternoonCurrentQueueTrigger"/>-->
+
+                <!--&lt;!&ndash;半月宝发放&ndash;&gt;-->
+                <!--<ref bean="autoShortRagularProductInfoJobTrigger"/>-->
+
+                <!--&lt;!&ndash; 积分清空 &ndash;&gt;-->
+                <!--<ref bean="accountUserIntegralJobTrigger"/>-->
+
+                <!--=====================关闭==========================-->
+
+            </list>
+        </property>
+    </bean>
+
+    <!-- 零点状态变更 -->
+    <bean id="accountJobTrigger"
+    class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    <property name="jobDetail">
+    <ref bean="accountJob"/>
+    </property>
+    <property name="cronExpression">
+    <value>1 0 0 * * ?</value>
+    </property>
+    </bean>
+
+    <!--&lt;!&ndash;上午自动发布活期宝 &ndash;&gt;-->
+    <!--<bean id="morningAutoCurrentProductInfoTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="autoMorningCurrentProductInfoJob"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 0 9 * * ?</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;自动发布定存宝&ndash;&gt;-->
+    <!--<bean id="autoRagularProductInfoJobTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="autoRagularProductInfoJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 0 9 * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;4.0推荐返现活动&ndash;&gt;-->
+    <!--<bean id="activityReferUserTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="activityReferUserJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 0 3 * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;定时发短信 &ndash;&gt;-->
+    <!--<bean id="autoSendSmsTimerTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="autoSendSmsTimerJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 0 9 * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;七天内提现统计&ndash;&gt;-->
+    <!--<bean id="accountQueryWithDrawJobTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="accountQueryWithDrawJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 20/30 8-19 * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash; 生日祝福 &ndash;&gt;-->
+    <!--<bean id="accountVipBirthdayJobTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="accountVipBirthdayJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 0 5 * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash; 生日祝福 &ndash;&gt;-->
+    <!--<bean id="accountBirthdayJobTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="accountBirthdayJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 0 5 * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;定存复投短信提示&ndash;&gt;-->
+    <!--<bean id="accountRagularExpireInfoJobTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="accountRagularExpireInfoJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 0 6 * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;平台统计&ndash;&gt;-->
+    <!--<bean id="platformStatisticsJobTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="platformStatisticsJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 0 0 * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash; 平台交易统计 &ndash;&gt;-->
+    <!--<bean id="platformTradingJobTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="platformTradingJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 0 4 * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;平台对账统计&ndash;&gt;-->
+    <!--<bean id="platformReconciliationJobTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="platformReconciliationJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 50 3 * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;平台综合年化&ndash;&gt;-->
+    <!--<bean id="platformAprJobTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="platformAprJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 0 3 * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;每日签到统计&ndash;&gt;-->
+    <!--<bean id="dailySignStatisticsTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="dailySignStatisticsJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 0 0 * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;红包临期短信提醒&ndash;&gt;-->
+    <!--<bean id="redpacketOvertimeRemindTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="redpacketOvertimeRemindJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 0 5 * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;结构化产品排行榜&ndash;&gt;-->
+    <!--<bean id="depositWeekSortJobTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="depositWeekSortJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>1 0 2 1 * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;平台异常统计&ndash;&gt;-->
+    <!--<bean id="platformExceptionJobTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="platformExceptionJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 0/30 * * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash; 代付查询 &ndash;&gt;-->
+    <!--<bean id="accountQueryPayJobTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="accountQueryPayJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 0/5 * * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;vip自动代付&ndash;&gt;-->
+    <!--<bean id="accountAutoPayJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="accountAutoPayJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 0/6 * * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;平台余额提现&ndash;&gt;-->
+    <!--<bean id="platformBalanceRemindJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="platformBalanceRemindJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 0/10 * * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;充值和提现提醒&ndash;&gt;-->
+    <!--<bean id="platformTradingRemindJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="platformTradingRemindJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>1 0 19 * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;定存复投活动&ndash;&gt;-->
+    <!--<bean id="activityDepositTypeJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="activityDepositTypeJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>1 0 2 * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--=====================关闭==========================-->
+
+    <!--&lt;!&ndash;工作日非vip自动代付&ndash;&gt;-->
+    <!--<bean id="accountWeekdayJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="accountWeekdayJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>1 0/15 9-18 ? * MON-FRI</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;周末非vip自动代付&ndash;&gt;-->
+    <!--<bean id="accountEverySundayJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="accountEverySundayJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>1 05 17 ? * SAT,SUN</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;上午天标排队 &ndash;&gt;-->
+    <!--<bean id="morningCurrentQueueTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="currentQueueJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 30 10 * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;下午天标排队 &ndash;&gt;-->
+    <!--<bean id="afternoonCurrentQueueTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="currentQueueJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 05 16 * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;半月宝发放&ndash;&gt;-->
+    <!--<bean id="autoShortRagularProductInfoJobTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="autoShortRagularProductInfoJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 0 0 * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash; 积分清空 &ndash;&gt;-->
+    <!--<bean id="accountUserIntegralJobTrigger"-->
+    <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail">-->
+    <!--<ref bean="accountUserIntegralJob"/>-->
+    <!--</property>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 0 0 1 1 ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+    <!--=====================关闭==========================-->
+
+    <!-- 零点状态变更 -->
+    <bean id="accountJob"
+    class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    <property name="targetObject">
+    <ref bean="accountQuartz"/>
+    </property>
+    <property name="targetMethod">
+    <value>accountJob</value>
+    </property>
+    </bean>
+
+    <!--&lt;!&ndash;上午自动发布活期宝 &ndash;&gt;-->
+    <!--<bean id="autoMorningCurrentProductInfoJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="autoCurrentProductInfoQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountMorningJob</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;自动发布定存宝&ndash;&gt;-->
+    <!--<bean id="autoRagularProductInfoJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="autoRagularProductInfoQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;4.0推荐活动返现&ndash;&gt;-->
+    <!--<bean id="activityReferUserJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="activityReferUserQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash; 定时发短信 &ndash;&gt;-->
+    <!--<bean id="autoSendSmsTimerJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="autoSendSmsTimerQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;七天内提现统计&ndash;&gt;-->
+    <!--<bean id="accountQueryWithDrawJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="accountQueryWithDrawQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash; 生日祝福 &ndash;&gt;-->
+    <!--<bean id="accountVipBirthdayJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="accountVipBirthdayQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash; 生日祝福 &ndash;&gt;-->
+    <!--<bean id="accountBirthdayJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="accountVipBirthdayQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountBirthdayJob</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;定存复投短信提示&ndash;&gt;-->
+    <!--<bean id="accountRagularExpireInfoJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="accountRagularExpireInfoQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;平台统计&ndash;&gt;-->
+    <!--<bean id="platformStatisticsJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="platformStatisticsQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;平台交易统计&ndash;&gt;-->
+    <!--<bean id="platformTradingJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="platformTradingQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;平台对账统计&ndash;&gt;-->
+    <!--<bean id="platformReconciliationJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="platformReconciliationQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;平台综合年化&ndash;&gt;-->
+    <!--<bean id="platformAprJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="platformAprQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;每日签到统计&ndash;&gt;-->
+    <!--<bean id="dailySignStatisticsJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="dailySignStatisticsQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash; 红包临期短信提醒&ndash;&gt;-->
+    <!--<bean id="redpacketOvertimeRemindJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="redpacketOvertimeRemindQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>autoRemind</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;结构化产品排行榜&ndash;&gt;-->
+    <!--<bean id="depositWeekSortJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="depositWeekSortQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--<property name="concurrent">-->
+    <!--<value>false</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;平台异常统计&ndash;&gt;-->
+    <!--<bean id="platformExceptionJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="platformExceptionQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--<property name="concurrent">-->
+    <!--<value>false</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;代付查询&ndash;&gt;-->
+    <!--<bean id="accountQueryPayJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="accountQueryPayQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--<property name="concurrent">-->
+    <!--<value>false</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;自动代付&ndash;&gt;-->
+    <!--<bean id="accountAutoPayJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="accountAutoPayQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--<property name="concurrent">-->
+    <!--<value>false</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;平台余额提现&ndash;&gt;-->
+    <!--<bean id="platformBalanceRemindJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="platformBalanceRemindQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--<property name="concurrent">-->
+    <!--<value>false</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;充值和提现提醒&ndash;&gt;-->
+    <!--<bean id="platformTradingRemindJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="platformTradingRemindQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--<property name="concurrent">-->
+    <!--<value>false</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;定存复投活动&ndash;&gt;-->
+    <!--<bean id="activityDepositTypeJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="activityDepositTypeQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountActivity</value>-->
+    <!--</property>-->
+    <!--<property name="concurrent">-->
+    <!--<value>false</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--=====================关闭==========================-->
+
+
+    <!--&lt;!&ndash;工作日非vip自动代付&ndash;&gt;-->
+    <!--<bean id="accountWeekdayJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="accountAutoPayQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountEverySundayJob</value>-->
+    <!--</property>-->
+    <!--<property name="concurrent">-->
+    <!--<value>false</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;周末非vip自动代付&ndash;&gt;-->
+    <!--<bean id="accountEverySundayJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="accountAutoPayQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountEverySundayJob</value>-->
+    <!--</property>-->
+    <!--<property name="concurrent">-->
+    <!--<value>false</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash; 天标排队 &ndash;&gt;-->
+    <!--<bean id="currentQueueJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="currentQueueQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;半月宝发放&ndash;&gt;-->
+    <!--<bean id="autoShortRagularProductInfoJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="autoShortRagularProductInfoQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;积分清空&ndash;&gt;-->
+    <!--<bean id="accountUserIntegralJob"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject">-->
+    <!--<ref bean="accountUserIntegralQuartz"/>-->
+    <!--</property>-->
+    <!--<property name="targetMethod">-->
+    <!--<value>accountJob</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+    <!--=====================关闭==========================-->
+
+    <!--零点状态变更 -->
+    <bean id="accountQuartz" class="com.ydzb.account.quartz.AccountQuartz"/>
+
+    <!--&lt;!&ndash;自动发布活期宝 &ndash;&gt;-->
+    <!--<bean id="autoCurrentProductInfoQuartz" class="com.ydzb.account.quartz.AutoCurrentProductInfoQuartz"/>-->
+
+    <!--&lt;!&ndash;自动发布定存宝 &ndash;&gt;-->
+    <!--<bean id="autoRagularProductInfoQuartz" class="com.ydzb.account.quartz.AutoRagularProductInfoQuartz"/>-->
+
+    <!--&lt;!&ndash;4.0推荐活动返现 &ndash;&gt;-->
+    <!--<bean id="activityReferUserQuartz" class="com.ydzb.account.quartz.ActivityReferUserQuartz"/>-->
+
+    <!--&lt;!&ndash; 定时发短信 &ndash;&gt;-->
+    <!--<bean id="autoSendSmsTimerQuartz" class="com.ydzb.account.quartz.AutoSendSmsTimerQuartz"/>-->
+
+    <!--&lt;!&ndash;七天内提现统计&ndash;&gt;-->
+    <!--<bean id="accountQueryWithDrawQuartz" class="com.ydzb.account.quartz.AccountQueryWithDrawQuartz"/>-->
+
+    <!--&lt;!&ndash; 生日祝福 &ndash;&gt;-->
+    <!--<bean id="accountVipBirthdayQuartz" class="com.ydzb.account.quartz.AccountVipBirthdayQuartz"/>-->
+
+    <!--&lt;!&ndash;定存复投短信提示&ndash;&gt;-->
+    <!--<bean id="accountRagularExpireInfoQuartz" class="com.ydzb.account.quartz.AccountRagularExpireInfo"/>-->
+
+    <!--&lt;!&ndash;平台统计&ndash;&gt;-->
+    <!--<bean id="platformStatisticsQuartz" class="com.ydzb.account.quartz.PlatformStatisticsQuartz"/>-->
+
+    <!--&lt;!&ndash;平台交易统计&ndash;&gt;-->
+    <!--<bean id="platformTradingQuartz" class="com.ydzb.account.quartz.PlatformTradingQuartz"/>-->
+
+    <!--&lt;!&ndash;平台对账统计&ndash;&gt;-->
+    <!--<bean id="platformReconciliationQuartz" class="com.ydzb.account.quartz.PlatformReconciliationQuartz"/>-->
+
+    <!--&lt;!&ndash;平台综合年化&ndash;&gt;-->
+    <!--<bean id="platformAprQuartz" class="com.ydzb.account.quartz.PlatformAprQuartz"/>-->
+
+    <!--&lt;!&ndash;每日签到统计 &ndash;&gt;-->
+    <!--<bean id="dailySignStatisticsQuartz" class="com.ydzb.account.quartz.DailySignStatisticsQuartz"/>-->
+
+    <!--&lt;!&ndash;红包临期短信提醒&ndash;&gt;-->
+    <!--<bean id="redpacketOvertimeRemindQuartz" class="com.ydzb.account.quartz.RedpacketOvertimeRemindQuartz"/>-->
+
+    <!--&lt;!&ndash;结构化产品排行榜&ndash;&gt;-->
+    <!--<bean id="depositWeekSortQuartz" class="com.ydzb.account.quartz.DepositWeekSortQuartz"/>-->
+
+    <!--&lt;!&ndash;平台异常统计&ndash;&gt;-->
+    <!--<bean id="platformExceptionQuartz" class="com.ydzb.account.quartz.PlatformExceptionQuartz"/>-->
+
+    <!--&lt;!&ndash;代付查询&ndash;&gt;-->
+    <!--<bean id="accountQueryPayQuartz" class="com.ydzb.account.quartz.AccountQueryPayQuartz"/>-->
+
+    <!--&lt;!&ndash;自动代付&ndash;&gt;-->
+    <!--<bean id="accountAutoPayQuartz" class="com.ydzb.account.quartz.AccountAutoPayQuartz"/>-->
+
+    <!--&lt;!&ndash;平台余额提现&ndash;&gt;-->
+    <!--<bean id="platformBalanceRemindQuartz" class="com.ydzb.account.quartz.PlatformBalanceRemindQuartz"/>-->
+
+    <!--&lt;!&ndash;充值和提现提醒&ndash;&gt;-->
+    <!--<bean id="platformTradingRemindQuartz" class="com.ydzb.account.quartz.PlatformTradingRemindQuartz"/>-->
+
+    <!--&lt;!&ndash;定存复投活动&ndash;&gt;-->
+    <!--<bean id="activityDepositTypeQuartz" class="com.ydzb.account.quartz.ActivityDepositTypeQuartz"/>-->
+
+
+    <!--=====================关闭==========================-->
+
+    <!--&lt;!&ndash; 天标排队 &ndash;&gt;-->
+    <!--<bean id="currentQueueQuartz" class="com.ydzb.account.quartz.AccountCurrentQueueQuartz"/>-->
+
+    <!--&lt;!&ndash;半月宝发放&ndash;&gt;-->
+    <!--<bean id="autoShortRagularProductInfoQuartz" class="com.ydzb.account.quartz.AutoShortRagularProductInfoQuartz"/>-->
+
+    <!--&lt;!&ndash;积分清空&ndash;&gt;-->
+    <!--<bean id="accountUserIntegralQuartz" class="com.ydzb.account.quartz.AccountUserIntegral"/>-->
+
+    <!--=====================关闭==========================-->
+
+</beans>

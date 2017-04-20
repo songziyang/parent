@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 	xmlns="http://www.springframework.org/schema/beans"
+		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		  xmlns:context="http://www.springframework.org/schema/context"
+		  xmlns:aop="http://www.springframework.org/schema/aop"
+		  xmlns:tx="http://www.springframework.org/schema/tx"
+		  xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+		  xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/data/jpa
+		http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
+		"
+		  default-lazy-init="true">
+
+	<description>Spring公共配置 </description>
+	<!-- 加载配置属性文件 -->
+	<context:property-placeholder
+			ignore-unresolvable="true" location="classpath*:/dbconn.properties,classpath*:/conf.properties" />
+
+	<!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
+	<context:component-scan base-package="com.ydzb">
+		<context:exclude-filter type="annotation"
+								expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation"
+								expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
+
+	<!-- Jpa Entity Manager 配置 -->
+	<bean id="entityManagerFactory"
+		  class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="persistenceProvider">
+			<bean class="org.hibernate.ejb.HibernatePersistence"/>
+		</property>
+		<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" />
+		<property name="packagesToScan" value="com.ydzb.*.entity" />
+		<property name="jpaProperties">
+			<props>
+				<!-- 是否显示SQL -->
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="net.sf.ehcache.configurationResourceName">ehcache/ehcache.xml</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- Dialect 仅支持Oracle, H2, MySql, PostgreSql, SQLServer 如需更多数据库类型，可扩展-->
+	<bean id="hibernateJpaVendorAdapter"
+		  class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="databasePlatform">
+			<bean factory-method="getDialect" class="com.ydzb.core.persistence.Hibernates">
+				<constructor-arg ref="dataSource" />
+			</bean>
+		</property>
+	</bean>
+
+	<!--
+	<jpa:repositories base-package="com.ydzb.*.repository"  />
+  	-->
+	<jpa:repositories
+			base-package="com.ydzb.*.repository"
+			repository-impl-postfix="Impl"
+			factory-class="com.ydzb.core.repository.support.SimpleBaseRepositoryFactoryBean"
+			entity-manager-factory-ref="entityManagerFactory"
+			transaction-manager-ref="transactionManager">
+	</jpa:repositories>
+
+
+	<!--设置BaseRepositoryImplHelper辅助类所需的entityManagerFactory-->
+	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="staticMethod"
+				  value="com.ydzb.core.repository.RepositoryHelper.setEntityManagerFactory"/>
+		<property name="arguments" ref="entityManagerFactory"/>
+	</bean>
+
+	<!--设置查询字符串转换器的conversion service-->
+	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="staticMethod"
+				  value="com.ydzb.core.entity.search.utils.SearchableConvertUtils.setConversionService"/>
+		<property name="arguments" ref="conversionService"/>
+	</bean>
+
+	<!-- 类型转换及数据格式化 -->
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean"/>
+
+
+
+	<!-- Jpa 事务配置 -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+
+	<!-- 配置事务增强处理Bean,指定事务管理器 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<!-- 用于配置详细的事务语义 -->
+		<tx:attributes>
+			<!-- 所有以下开头的方法是read-only的 -->
+			<tx:method name="query*" read-only="true" />
+			<tx:method name="browse*" read-only="true" />
+			<tx:method name="list*" read-only="true" />
+			<tx:method name="load*" read-only="true" />
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="is*" read-only="true" />
+			<tx:method name="check*" read-only="true" />
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="count*" read-only="true" />
+			<!-- 其他方法使用默认的事务设置 -->
+			<tx:method name="*" rollback-for="java.lang.Exception" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<!-- 配置一个切入点，匹配empManager和mgrManager 两个Bean的所有方法的执行 -->
+		<aop:pointcut id="basePointcut"
+					  expression="execution(* com.ydzb.*.service.impl.*.*(..))" />
+		<!-- 指定在leePointcut切入点应用txAdvice事务增强处理 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="basePointcut" />
+	</aop:config>
+
+
+
+	<!-- 数据源配置, 使用Druid JDBC连接池 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		  destroy-method="close">
+		<!-- Connection Info -->
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="maxActive" value="${jdbc.pool.maxActive}" />
+		<property name="minIdle" value="0" />
+	</bean>
+
+	<!-- 将日志切面交给Spring容器管理 -->
+	<bean id="logAspectJ" class="com.ydzb.core.aop.LogAspectJ" />
+	<!-- 使用XML方式进行AOP配置 -->
+	<aop:config>
+		<!-- 使用XML方式配置日志切面 -->
+		<aop:aspect id="logaop" ref="logAspectJ">
+			<!-- 定义切入点 拦截所有service方法 -->
+			<aop:pointcut id="logpointcut"
+						  expression="execution(* com.ydzb.*.service.impl.*.*(..))" />
+			<!-- 将LogAspectJ切面中的myBeforeAdvice方法定义成前置通知 -->
+			<aop:before pointcut-ref="logpointcut" method="myBeforeAdvice" />
+			<!-- 将LogAspectJ切面中的myAfterReturningAdvice方法定义成后置通知 -->
+			<aop:after-returning pointcut-ref="logpointcut"
+								 method="myAfterReturningAdvice" />
+			<!-- 将LogAspectJ切面中的myAfterThrowingAdvice方法定义成异常通知 -->
+			<aop:after-throwing pointcut-ref="logpointcut"
+								method="myAfterThrowingAdvice" throwing="e" />
+			<!-- 将LogAspectJ切面中的myAfterAdvice方法定义成最终通知 -->
+			<aop:after pointcut-ref="logpointcut" method="myAfterAdvice" />
+			<!-- 将LogAspectJ切面中的myAroundAdvice方法定义成环绕通知 -->
+			<aop:around pointcut-ref="logpointcut" method="myAroundAdvice" />
+		</aop:aspect>
+	</aop:config>
+
+</beans>
